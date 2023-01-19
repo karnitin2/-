@@ -11,9 +11,14 @@
 
 #include "md5.h"
 
-#define MAX_LISTEN 10
 
 
+/*!
+    @brief Function launching the client and connecting to the server
+    @param ip_addr - string containing server IP address
+    @param port - port number
+    @return socket file descriptor on success, -1 otherwise
+*/
 int client_launch(const char* ip_addr, uint16_t port) {
     int res = 0;
     int socket_fd = 0;
@@ -23,7 +28,7 @@ int client_launch(const char* ip_addr, uint16_t port) {
     socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 
     addr.sin_family = AF_INET;
-    addr.sin_port = port;
+    addr.sin_port = htons(port);
     res = inet_aton(ip_addr, &addr.sin_addr);
     if (res < 0) {
         printf("Incorrect IP address\n");
@@ -40,9 +45,22 @@ int client_launch(const char* ip_addr, uint16_t port) {
 }
 
 
+/*!
+    @brief salt value length
+*/
 #define SALT_LEN 16
+
+/*!
+    @brief maximum password length
+*/
 #define MAX_PWD_LEN 20
 
+
+/*!
+    @brief authenticating and sending vectors data
+    @param socket_fd - socket file descriptor
+    @return none
+*/
 void send_vectors(int socket_fd) {
     int res, client_fd, bytes_read = 0;
     struct sockaddr_in addr;
