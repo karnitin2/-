@@ -4,3 +4,6 @@ all:
 clean:
 	rm server
 	rm client
+#.PHONY docs
+docs:
+	@doxygen
