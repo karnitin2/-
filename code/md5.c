@@ -8,6 +8,13 @@
 
 #define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
  
+ 
+/*!
+    @brief Function calculating MD5 hash
+    @param initial_msg - array of bytes
+    @param initial_len - length of bytes array
+    @return pointer to string containing MD5 hash in string hex representation
+*/
 char* md5(const uint8_t *initial_msg, size_t initial_len) {
     uint32_t h0 = 0, h1 = 0, h2 = 0, h3 = 0;
     uint8_t *msg = NULL;
